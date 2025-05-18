@@ -31,4 +31,7 @@ jobs:
       - name: weread sync
         run: |
           weread
+      - name: fix sync
+        run: |
+          fix
       
