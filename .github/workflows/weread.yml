@@ -24,6 +24,7 @@ jobs:
       WEEK_DATABASE_NAME: ${{ vars.WEEK_DATABASE_NAME }}
       MONTH_DATABASE_NAME: ${{ vars.MONTH_DATABASE_NAME }}
       DAY_DATABASE_NAME: ${{ vars.DAY_DATABASE_NAME }}
+      WEREAD2NOTION: ${{ vars.WEREAD2NOTION }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -35,13 +36,20 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
+      - name: weread2notion sync
+        if: ${{ vars.WEREAD2NOTION == 'true' }}
+        run: |
+          weread2notion
       - name: weread book sync
+        if: ${{ vars.WEREAD2NOTION != 'true' }}
         run: |
           book
       - name: weread sync
+        if: ${{ vars.WEREAD2NOTION != 'true' }}
         run: |
           weread
       - name: fix sync
+        # Corrected indentation for the 'if' condition
+        if: ${{ vars.WEREAD2NOTION != 'true' }}
         run: |
           fix
-      
